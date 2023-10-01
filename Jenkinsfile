@@ -66,8 +66,7 @@ pipeline {
                 }
             }
         }
-
-        }
     }
+}
 
 //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
