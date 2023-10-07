@@ -66,7 +66,28 @@ pipeline {
                 }
             }
         }
+
+        stage('Push the chenged deployment file to Git') {
+            steps {
+                script {
+                    sh """
+                    git config --global user.name "anastobe"
+                    git config --global user.email "anastobe968@gmail.com"
+                    git add deployment.yml
+                    git commit -m "updated the deployment file"
+                    """
+                    withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')]) {
+                       sh "git push https://github.com/anastobe/gitops_argocd_project.git main"
+                    }
+
+                }
+            }
+        }
+
     }
 }
 
+//2nd latest
+//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
+//1st
 //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
