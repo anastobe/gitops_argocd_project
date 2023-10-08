@@ -47,45 +47,48 @@ pipeline {
                 }
             }
         } 
-        stage('Delete Docker images') {
-            steps {
-                script {
-                    sh "docker rmi ${IMAGE_NAME}:${IMAGE_TAG}"
-                    sh "docker rmi ${IMAGE_NAME}:latest"
-                }
-            }
-        }
-        stage('Updating kubernetes deployment file') {
-            steps {
-                script {
-                    sh """
-                    cat deployment.yml
-                    sed -i 's/${APP_NAME}.*/${APP_NAME}:${IMAGE_TAG}/g' deployment.yml
-                    cat deployment.yml
-                    """
-                }
-            }
-        }
+        // stage('Delete Docker images') {
+        //     steps {
+        //         script {
+        //             sh "docker rmi ${IMAGE_NAME}:${IMAGE_TAG}"
+        //             sh "docker rmi ${IMAGE_NAME}:latest"
+        //         }
+        //     }
+        // }
+        // stage('Updating kubernetes deployment file') {
+        //     steps {
+        //         script {
+        //             sh """
+        //             cat deployment.yml
+        //             sed -i 's/${APP_NAME}.*/${APP_NAME}:${IMAGE_TAG}/g' deployment.yml
+        //             cat deployment.yml
+        //             """
+        //         }
+        //     }
+        // }
 
-        stage('Push the chenged deployment file to Git') {
-            steps {
-                script {
-                    sh """
-                    git config --global user.name "anastobe"
-                    git config --global user.email "anastobe968@gmail.com"
-                    git add deployment.yml
-                    git commit -m "updated the deployment file"
-                    """
-                    withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')]) {
-                       sh "git push https://github.com/anastobe/gitops_argocd_project.git main"
-                    }
+        // stage('Push the chenged deployment file to Git') {
+        //     steps {
+        //         script {
+        //             sh """
+        //             git config --global user.name "anastobe"
+        //             git config --global user.email "anastobe968@gmail.com"
+        //             git add deployment.yml
+        //             git commit -m "updated the deployment file"
+        //             """
+        //             withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')]) {
+        //                sh "git push https://github.com/anastobe/gitops_argocd_project.git main"
+        //             }
 
-                }
-            }
-        }
+        //         }
+        //     }
+        // }
 
     }
 }
+
+//4th
+//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
 //3rd
 //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
 //2nd latest
